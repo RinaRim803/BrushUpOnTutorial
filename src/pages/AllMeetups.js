@@ -1,29 +1,47 @@
+import { useEffect, useState } from "react";
+
 import MeetupList from "../components/meetups/MeetupList";
 
-const DUMMY_DATA = [
-  {
-    id: "m1",
-    title: "First Meetup",
-    address: "188 E6th Ave., Vancouver, BC",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Concord_Pacific_Master_Plan_Area.jpg/1920px-Concord_Pacific_Master_Plan_Area.jpg",
-    description: "Welcome to First Meetup!",
-  },
-  {
-    id: "m2",
-    title: "Second Meetup",
-    address: "188 E6th Ave., Vancouver, BC",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/BC_Place_and_Canoe_Bridge.jpg/1280px-BC_Place_and_Canoe_Bridge.jpg",
-    description: "Welcome to Second Meetup!",
-  },
-];
+// fetch data frmo firebase
+// parser fetched data to be able to read as a json.
 
 function AllMeetups() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadedMeetup, setIsLoadedMeetup] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(
+      "https://react-getting-started-be2ec-default-rtdb.firebaseio.com/meetups.json"
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const meetups = [];
+        for (const key in data) {
+          const meetup = {
+            id: key,
+            ...data[key],
+          };
+          meetups.push(meetup);
+        }
+        setIsLoadedMeetup(meetups);
+      });
+  }, []);
+
+  let content;
+
+  if (isLoading) {
+    content = <MeetupList meetup={isLoadedMeetup} />;
+  } else {
+    content = <p>is loading right now...</p>;
+  }
+
   return (
     <div>
       <p>All Meetup Page</p>
-      <MeetupList meetup={DUMMY_DATA} />
+      {content}
     </div>
   );
 }
