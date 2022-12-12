@@ -5,13 +5,13 @@ import classes from "./MeetupItem.module.css";
 
 function MeetupItem(props) {
   const userFavoritesCtx = useContext(FavoriteProvider);
-  const itemIsFavortie = userFavoritesCtx.isUserFavorites(props);
+  const itemIsFavortie = userFavoritesCtx.isUserFavorites(props.id);
 
   function favoriteButtonHandler() {
     if (itemIsFavortie) {
       userFavoritesCtx.removeFavorites(props.id);
+      console.log("after remove favortites", userFavoritesCtx.favorites)
     } else {
-      console.log("in handler prop:",props)
       userFavoritesCtx.addFavorites({
         id: props.id,
         title: props.title,
@@ -19,6 +19,7 @@ function MeetupItem(props) {
         address: props.address,
         description: props.description,
       });
+      console.log("after add favortites", userFavoritesCtx.favorites)
     }
   }
 

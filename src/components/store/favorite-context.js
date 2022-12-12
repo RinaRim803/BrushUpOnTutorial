@@ -21,9 +21,10 @@ export function FavoriteProviderHandler(props) {
       return prevUserFavorites.filter((meetup) => meetup.id !== meetupId);
     });
   }
-  function isUserFavoritesHandler(meetup) {
+  function isUserFavoritesHandler(meetupId) {
+    console.log("isUserFavorites: ",userFavorites.favorites)
     return userFavorites.some(
-      (prevUserFavorites) => prevUserFavorites === meetup
+      (prevUserFavorites) => prevUserFavorites.id === meetupId
     );
   }
 
