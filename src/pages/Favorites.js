@@ -6,7 +6,7 @@ function Favorites() {
   const userFavoritesCtx = useContext(FavoriteProvider);
 
   let content;
-  if(userFavoritesCtx.totlaFavorites){
+  if(!userFavoritesCtx.totalFavorites){
     content = <p> no favorites</p>
   } else{
     content = <MeetupList meetup={userFavoritesCtx.favorites}/>
