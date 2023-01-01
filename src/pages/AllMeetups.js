@@ -1,9 +1,25 @@
 import { useEffect, useState } from "react";
-
+import { Connect, connect } from "react-redux";
 import MeetupList from "../components/meetups/MeetupList";
 
 // fetch data frmo firebase
 // parser fetched data to be able to read as a json.
+const mapStateToProps = (state) => {
+  return {
+    user: state.userRedcuer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setName: (name) => {
+      dispatch({
+        type: "SET_NAME",
+        payload: name,
+      });
+    },
+  };
+};
 
 function AllMeetups() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,4 +62,4 @@ function AllMeetups() {
   );
 }
 
-export default AllMeetups;
+export default connect(mapStateToProps, mapDispatchToProps)(AllMeetups);
