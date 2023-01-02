@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { Connect, connect } from "react-redux";
 import MeetupList from "../components/meetups/MeetupList";
+import { setName } from "../components/actions/userActions";
 
 // fetch data frmo firebase
 // parser fetched data to be able to read as a json.
 const mapStateToProps = (state) => {
   return {
-    user: state.userRedcuer,
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setName: (name) => {
-      dispatch({
-        type: "SET_NAME",
-        payload: name,
-      });
+      dispatch(setName(name));
     },
   };
 };
